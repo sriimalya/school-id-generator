@@ -304,13 +304,55 @@
 }
 
 /* =========================================================
-   RESPONSIVE PREVIEW — scales down on smaller screens
+   RESPONSIVE WRAPPER — scales card to fit viewport
+   The card keeps its native 550×870 layout. The wrapper
+   uses transform: scale() so every px value, clip-path,
+   and font-size shrinks proportionally.
 ========================================================= */
-@media screen and (max-width: 600px) {
-  .id-card {
-    width: min(550px, calc(100vw - 30px));
-    height: auto;
-    aspect-ratio: 55 / 87;
+.id-card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Default: card fits naturally, no scaling needed */
+.id-card-wrapper .id-card {
+  transform-origin: top center;
+}
+
+/* ---- Tablet / small desktop ---- */
+@media screen and (max-width: 620px) {
+  .id-card-wrapper {
+    /* The card is 550px wide; we shrink it to fit (100vw - 32px) */
+    --card-w: 550;
+    --card-h: 870;
+    --available: calc(100vw - 32px);
+    --scale: min(1, calc(var(--available) / (var(--card-w) * 1px)));
+  }
+
+  .id-card-wrapper .id-card {
+    transform: scale(var(--scale));
+    transform-origin: top center;
+  }
+
+  /* Collapse wrapper height to match the visually scaled card */
+  .id-card-wrapper {
+    height: calc(870px * var(--scale));
+    overflow: visible;
+  }
+}
+
+/* ---- Mobile phones ---- */
+@media screen and (max-width: 480px) {
+  .id-card-wrapper {
+    --available: calc(100vw - 24px);
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .id-card-wrapper {
+    --available: calc(100vw - 16px);
   }
 }
 
@@ -336,6 +378,11 @@
     display: block;
   }
 
+  .id-card-wrapper {
+    height: auto;
+  }
+
+  .id-card-wrapper .id-card,
   .id-card {
     width: 55mm;
     height: 87mm;
@@ -343,5 +390,6 @@
     box-shadow: none;
     border: none;
     aspect-ratio: 55 / 87;
+    transform: none;
   }
 }

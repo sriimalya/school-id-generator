@@ -12,6 +12,7 @@ const detailRows = [
 
 export default function IDCard({ student }) {
   return (
+    <div className="id-card-wrapper">
     <div className="id-card" data-testid="id-card">
       {/* Background Geometry */}
       <div className="bg-top-blue" />
@@ -83,6 +84,7 @@ export default function IDCard({ student }) {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

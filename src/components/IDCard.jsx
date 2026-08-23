@@ -75,7 +75,7 @@ export default function IDCard({ student }) {
             <div className="logo logo-left">
               <svg viewBox="0 0 64 64" width="100%" height="100%">
                 <circle cx="32" cy="32" r="30" fill="#fff" stroke="#1a3a5c" strokeWidth="1" />
-                <text x="32" y="20" textAnchor="middle" fontSize="6" fontWeight="800" fill="#e53030">GLOBAL PUBLIC SCHOOL</text>
+                <text x="32" y="20" textAnchor="middle" fontSize="6" fontWeight="800" fill="#e53030" letterSpacing="0.4">GLOBAL PUBLIC SCHOOL</text>
                 <text x="32" y="38" textAnchor="middle" fontSize="16" fontWeight="900" fill="#1e2d3d">GPS</text>
                 <text x="32" y="52" textAnchor="middle" fontSize="5" fontWeight="700" fill="#e53030">JAITHAR, SARAN</text>
               </svg>

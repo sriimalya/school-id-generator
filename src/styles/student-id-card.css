@@ -3,6 +3,10 @@
    
    Base card size: 550px × 870px  (55 : 87 aspect ratio)
    All values are direct ports from the validated reference design.
+   Scaling for smaller screens is handled in JS (see IDCard.jsx) via
+   an inline transform: scale() driven by ResizeObserver — this keeps
+   the layout pixel-identical to the laptop/desktop version at every
+   screen size, just shrunk proportionally.
    =================================================================== */
 
 * {
@@ -22,6 +26,8 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   border: 1px solid #ccc;
   font-family: Arial, Helvetica, sans-serif;
+  flex-shrink: 0;
+  transform-origin: top center;
 }
 
 /* =========================================================
@@ -304,56 +310,18 @@
 }
 
 /* =========================================================
-   RESPONSIVE WRAPPER — scales card to fit viewport
-   The card keeps its native 550×870 layout. The wrapper
-   uses transform: scale() so every px value, clip-path,
-   and font-size shrinks proportionally.
+   RESPONSIVE WRAPPER
+   The card keeps its native 550×870 layout at all times.
+   Scaling is applied via an inline `transform: scale()` set
+   from IDCard.jsx (ResizeObserver-driven), so this file only
+   needs to size/clip the wrapper — no media-query math here.
 ========================================================= */
 .id-card-wrapper {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-}
-
-/* Default: card fits naturally, no scaling needed */
-.id-card-wrapper .id-card {
-  transform-origin: top center;
-}
-
-/* ---- Tablet / small desktop ---- */
-@media screen and (max-width: 620px) {
-  .id-card-wrapper {
-    /* The card is 550px wide; we shrink it to fit (100vw - 32px) */
-    --card-w: 550;
-    --card-h: 870;
-    --available: calc(100vw - 32px);
-    --scale: min(1, calc(var(--available) / (var(--card-w) * 1px)));
-  }
-
-  .id-card-wrapper .id-card {
-    transform: scale(var(--scale));
-    transform-origin: top center;
-  }
-
-  /* Collapse wrapper height to match the visually scaled card */
-  .id-card-wrapper {
-    height: calc(870px * var(--scale));
-    overflow: visible;
-  }
-}
-
-/* ---- Mobile phones ---- */
-@media screen and (max-width: 480px) {
-  .id-card-wrapper {
-    --available: calc(100vw - 24px);
-  }
-}
-
-@media screen and (max-width: 380px) {
-  .id-card-wrapper {
-    --available: calc(100vw - 16px);
-  }
+  overflow: hidden;
 }
 
 /* =========================================================
@@ -379,7 +347,8 @@
   }
 
   .id-card-wrapper {
-    height: auto;
+    height: auto !important;
+    overflow: visible;
   }
 
   .id-card-wrapper .id-card,
@@ -390,6 +359,6 @@
     box-shadow: none;
     border: none;
     aspect-ratio: 55 / 87;
-    transform: none;
+    transform: none !important;
   }
 }

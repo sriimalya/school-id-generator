@@ -67,17 +67,77 @@ export default function IDCard({ student }) {
           {/* Registration Number */}
           <div className="reg-no">Reg.No. :- {student.regNo}</div>
 
-          {/* School Title -- left-aligned, single line */}
-          <div className="school-title">{student.schoolName}</div>
+          {/* School Title — SVG textLength guarantees identical width on every device */}
+          <svg
+            className="school-title-svg"
+            width="492"
+            height="46"
+            viewBox="0 0 492 46"
+            style={{
+              display: "block",
+              marginLeft: "22px",
+              marginTop: "3px",
+              overflow: "visible",
+            }}
+          >
+            <text
+              x="0"
+              y="40"
+              fill="#ffffff"
+              fontSize="38"
+              fontWeight="900"
+              fontFamily="'Barlow', Arial, Helvetica, sans-serif"
+              letterSpacing="-0.2"
+              textLength="492"
+              lengthAdjust="spacingAndGlyphs"
+            >
+              {student.schoolName}
+            </text>
+          </svg>
 
           {/* Subheader: Logos + Location + Session */}
           <div className="subheader">
             <div className="logo logo-left">
               <svg viewBox="0 0 64 64" width="100%" height="100%">
-                <circle cx="32" cy="32" r="30" fill="#fff" stroke="#1a3a5c" strokeWidth="1" />
-                <text x="32" y="20" textAnchor="middle" fontSize="6" fontWeight="800" fill="#e53030" letterSpacing="0.4">GLOBAL PUBLIC SCHOOL</text>
-                <text x="32" y="38" textAnchor="middle" fontSize="16" fontWeight="900" fill="#1e2d3d">GPS</text>
-                <text x="32" y="52" textAnchor="middle" fontSize="5" fontWeight="700" fill="#e53030">JAITHAR, SARAN</text>
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="30"
+                  fill="#fff"
+                  stroke="#1a3a5c"
+                  strokeWidth="1"
+                />
+                <text
+                  x="32"
+                  y="20"
+                  textAnchor="middle"
+                  fontSize="6"
+                  fontWeight="800"
+                  fill="#e53030"
+                  letterSpacing="0.4"
+                >
+                  GLOBAL PUBLIC SCHOOL
+                </text>
+                <text
+                  x="32"
+                  y="38"
+                  textAnchor="middle"
+                  fontSize="16"
+                  fontWeight="900"
+                  fill="#1e2d3d"
+                >
+                  GPS
+                </text>
+                <text
+                  x="32"
+                  y="52"
+                  textAnchor="middle"
+                  fontSize="5"
+                  fontWeight="700"
+                  fill="#e53030"
+                >
+                  JAITHAR, SARAN
+                </text>
               </svg>
             </div>
 
@@ -89,7 +149,16 @@ export default function IDCard({ student }) {
             <div className="logo logo-right">
               <svg viewBox="0 0 64 64" width="100%" height="100%">
                 <circle cx="32" cy="32" r="30" fill="#fff" />
-                <text x="32" y="16" textAnchor="middle" fontSize="6.5" fontWeight="800" fill="#3080d0">My Chhota School</text>
+                <text
+                  x="32"
+                  y="16"
+                  textAnchor="middle"
+                  fontSize="6.5"
+                  fontWeight="800"
+                  fill="#3080d0"
+                >
+                  My Chhota School
+                </text>
                 <circle cx="40" cy="32" r="10" fill="#e04020" />
                 <circle cx="40" cy="24" r="6" fill="#ffe0a0" />
                 <circle cx="26" cy="36" r="8" fill="#3080d0" />
@@ -100,7 +169,10 @@ export default function IDCard({ student }) {
 
           {/* Student Photo */}
           <div className="photo-container">
-            <img src={student.photo} alt={`Photo of ${student.name || "student"}`} />
+            <img
+              src={student.photo}
+              alt={`Photo of ${student.name || "student"}`}
+            />
           </div>
 
           {/* Student Name */}
@@ -119,7 +191,9 @@ export default function IDCard({ student }) {
 
           {/* Footer */}
           <div className="footer">
-            <div className="contact-info">School Contact:-{student.schoolContact}</div>
+            <div className="contact-info">
+              School Contact:-{student.schoolContact}
+            </div>
             <div className="principal-box">
               <div className="signature-placeholder" />
               <div className="principal-text">PRINCIPAL</div>

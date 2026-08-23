@@ -40,7 +40,7 @@
   right: 0;
   bottom: 0;
   background-color: #273746;
-  clip-path: polygon(0 0, 100% 0, 100% 351px, 0 54px);
+  clip-path: polygon(0 0, 100% 0, 100% 362px, 0 65px);
   z-index: 1;
 }
 
@@ -50,8 +50,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #008641;
-  clip-path: polygon(0 65px, 100% 361px, 100% 396px, 0 100px);
+  background-color: #019644;
+  clip-path: polygon(0 76px, 100% 372px, 100% 403px, 0 107px);
   z-index: 1;
 }
 
@@ -62,7 +62,7 @@
   right: 0;
   bottom: 0;
   background-color: #273746;
-  clip-path: polygon(0 722px, 275px 100%, 0 100%);
+  clip-path: polygon(0 722px, 185px 100%, 0 100%);
   z-index: 1;
 }
 
@@ -73,7 +73,7 @@
   right: 0;
   bottom: 0;
   background-color: #008641;
-  clip-path: polygon(0 676px, 360px 100%, 295px 100%, 0 711px);
+  clip-path: polygon(0 676px, 248px 100%, 203px 100%, 0 711px);
   z-index: 1;
 }
 
@@ -102,22 +102,11 @@
 }
 
 /* =========================================================
-   SCHOOL TITLE — left-aligned, single line, directly below reg
+   SCHOOL TITLE — rendered as SVG for device-agnostic width
+   All font properties live on the <text> element in IDCard.jsx
 ========================================================= */
-.school-title {
-  color: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 35px;
-  font-weight: 700;
-  text-align: left;
-  margin-top: 3px;
-  margin-left: 22px;
-  margin-right: 22px;
-  letter-spacing: -0.2px;
-  transform: scaleY(1.1);
-  transform-origin: left center;
-  line-height: 1;
-  white-space: nowrap;
+.school-title-svg {
+  display: block;
 }
 
 /* =========================================================
@@ -137,10 +126,10 @@
   text-align: center;
   width: 100%;
   position: absolute;
-  top: 0;
+  top: 6px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 8px;
 }
 
 .location-text h2 {
@@ -178,12 +167,12 @@
 
 .logo-left {
   left: 22px;
-  top: 10px;
+  top: -5px;
 }
 
 .logo-right {
   right: 36px;
-  top: 10px;
+  top: -5px;
 }
 
 /* =========================================================
@@ -212,8 +201,9 @@
 ========================================================= */
 .student-name {
   color: #0000ff;
-  font-size: 22px;
-  font-weight: 1000;
+  font-family: "Barlow", Arial, Helvetica, sans-serif;
+  font-size: 26px;
+  font-weight: 900;
   text-align: center;
   margin-top: 11px;
   text-transform: uppercase;
@@ -270,14 +260,14 @@
 ========================================================= */
 .contact-info {
   color: #000000;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 800;
   letter-spacing: -0.2px;
   text-shadow:
     -1.5px -1.5px 0 #fff,
-     1.5px -1.5px 0 #fff,
-    -1.5px  1.5px 0 #fff,
-     1.5px  1.5px 0 #fff;
+    1.5px -1.5px 0 #fff,
+    -1.5px 1.5px 0 #fff,
+    1.5px 1.5px 0 #fff;
   z-index: 4;
   margin-bottom: 4px;
 }
@@ -315,6 +305,11 @@
    Scaling is applied via an inline `transform: scale()` set
    from IDCard.jsx (ResizeObserver-driven), so this file only
    needs to size/clip the wrapper — no media-query math here.
+   (Deliberately no @media overrides on the card's internals:
+   any breakpoint-specific CSS would make the design look
+   different at different screen widths. Uniform scale-down
+   of the fixed 550x870 layout is what keeps the look identical
+   everywhere.)
 ========================================================= */
 .id-card-wrapper {
   display: flex;

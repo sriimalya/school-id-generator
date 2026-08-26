@@ -176,15 +176,29 @@ export default function IDCard({ student }) {
           </div>
 
           {/* Student Name */}
-          <div className="student-name">{student.name}</div>
+          <div 
+            className="student-name"
+            style={{
+              fontSize: student.name && student.name.length > 15 
+                ? `${Math.max(16, 26 - (student.name.length - 15) * 0.7)}px` 
+                : undefined
+            }}
+          >
+            {student.name}
+          </div>
 
           {/* Student Details Grid */}
           <div className="details-grid">
             {detailRows.map((row) => (
-              <div className="details-grid__row" key={row.key}>
+              <div 
+                className={`details-grid__row ${row.key === "address" ? "address-row" : ""}`} 
+                key={row.key}
+              >
                 <div className="grid-label">{row.label}</div>
                 <div className="grid-colon">:-</div>
-                <div className="grid-value">{student[row.key]}</div>
+                <div className={`grid-value ${row.key === "address" ? "address-value" : ""}`}>
+                  {student[row.key]}
+                </div>
               </div>
             ))}
           </div>

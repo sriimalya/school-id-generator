@@ -1,0 +1,214 @@
+import React from "react";
+import "../../styles/student-id-card.css";
+
+const BASE_WIDTH = 550;
+const BASE_HEIGHT = 870;
+
+const detailRows = [
+  { key: "fatherName", label: "F.Name" },
+  { key: "dob", label: "D.O.B." },
+  { key: "className", label: "Class" },
+  { key: "section", label: "Sec" },
+  { key: "rollNo", label: "Roll No" },
+  { key: "mobile", label: "Mobile No." },
+  { key: "address", label: "Address" },
+];
+
+/**
+ * An isolated 1x unscaled version of the card rendered strictly off-screen.
+ * Eliminates all CSS transforms and viewport scaling, guaranteeing zero dislocation during capture.
+ */
+export const HiddenCardMount = React.forwardRef(({ student }, ref) => {
+  if (!student) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: "-9999px",
+        width: `${BASE_WIDTH}px`,
+        height: `${BASE_HEIGHT}px`,
+        pointerEvents: "none",
+        zIndex: -999,
+        overflow: "hidden",
+      }}
+    >
+      <div
+        ref={ref}
+        className="id-card"
+        style={{
+          width: `${BASE_WIDTH}px`,
+          height: `${BASE_HEIGHT}px`,
+          transform: "none",
+          margin: 0,
+          boxShadow: "none",
+        }}
+      >
+        {/* Background Geometry */}
+        <div className="bg-top-blue" />
+        <div className="bg-top-green" />
+        <div className="bg-bottom-green" />
+        <div className="bg-bottom-blue" />
+
+        {/* Content Layer */}
+        <div className="content-layer">
+          {/* Registration Number */}
+          <div className="reg-no">Reg.No. :- {student.regNo}</div>
+
+          {/* School Title — SVG textLength guarantees identical width on every device */}
+          <svg
+            className="school-title-svg"
+            width="492"
+            height="46"
+            viewBox="0 0 492 46"
+            style={{
+              display: "block",
+              marginLeft: "22px",
+              marginTop: "3px",
+              overflow: "visible",
+            }}
+          >
+            <text
+              x="0"
+              y="40"
+              fill="#ffffff"
+              fontSize="38"
+              fontWeight="900"
+              fontFamily="'Barlow', Arial, Helvetica, sans-serif"
+              letterSpacing="-0.2"
+              textLength="492"
+              lengthAdjust="spacingAndGlyphs"
+            >
+              {student.schoolName}
+            </text>
+          </svg>
+
+          {/* Subheader: Logos + Location + Session */}
+          <div className="subheader">
+            <div className="logo logo-left">
+              <svg viewBox="0 0 64 64" width="100%" height="100%">
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="30"
+                  fill="#fff"
+                  stroke="#1a3a5c"
+                  strokeWidth="1"
+                />
+                <text
+                  x="32"
+                  y="20"
+                  textAnchor="middle"
+                  fontSize="6"
+                  fontWeight="800"
+                  fill="#e53030"
+                  letterSpacing="0.4"
+                >
+                  GLOBAL PUBLIC SCHOOL
+                </text>
+                <text
+                  x="32"
+                  y="38"
+                  textAnchor="middle"
+                  fontSize="16"
+                  fontWeight="900"
+                  fill="#1e2d3d"
+                >
+                  GPS
+                </text>
+                <text
+                  x="32"
+                  y="52"
+                  textAnchor="middle"
+                  fontSize="5"
+                  fontWeight="700"
+                  fill="#e53030"
+                >
+                  JAITHAR, SARAN
+                </text>
+              </svg>
+            </div>
+
+            <div className="location-text">
+              <h2>{student.schoolLocation}</h2>
+              <p>{student.session}</p>
+            </div>
+
+            <div className="logo logo-right">
+              <svg viewBox="0 0 64 64" width="100%" height="100%">
+                <circle cx="32" cy="32" r="30" fill="#fff" />
+                <text
+                  x="32"
+                  y="16"
+                  textAnchor="middle"
+                  fontSize="6.5"
+                  fontWeight="800"
+                  fill="#3080d0"
+                >
+                  My Chhota School
+                </text>
+                <circle cx="40" cy="32" r="10" fill="#e04020" />
+                <circle cx="40" cy="24" r="6" fill="#ffe0a0" />
+                <circle cx="26" cy="36" r="8" fill="#3080d0" />
+                <circle cx="26" cy="28" r="5" fill="#ffe0a0" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Student Photo */}
+          <div className="photo-container">
+            <img
+              src={student.photo}
+              alt={`Photo of ${student.name || "student"}`}
+              crossOrigin="anonymous"
+            />
+          </div>
+
+          {/* Student Name */}
+          <div
+            className="student-name"
+            style={{
+              fontSize:
+                student.name && student.name.length > 15
+                  ? `${Math.max(16, 26 - (student.name.length - 15) * 0.7)}px`
+                  : undefined,
+            }}
+          >
+            {student.name}
+          </div>
+
+          {/* Student Details Grid */}
+          <div className="details-grid">
+            {detailRows.map((row) => (
+              <div
+                className={`details-grid__row ${row.key === "address" ? "address-row" : ""}`}
+                key={row.key}
+              >
+                <div className="grid-label">{row.label}</div>
+                <div className="grid-colon">:-</div>
+                <div className={`grid-value ${row.key === "address" ? "address-value" : ""}`}>
+                  {student[row.key]}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer */}
+          <div className="footer">
+            <div className="contact-info">
+              School Contact:-{student.schoolContact}
+            </div>
+            <div className="principal-box">
+              <div className="signature-placeholder" />
+              <div className="principal-text">PRINCIPAL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+HiddenCardMount.displayName = "HiddenCardMount";
+
